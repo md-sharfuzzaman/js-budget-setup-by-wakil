@@ -38,7 +38,41 @@ class UI {
     }
     //show balance
     showBalance(){
-        console.log('this eai this ? tmi ki aicho naki');
+        const expense = this.totalExpense();
+        const total = parseInt(this.budgetAmount.textContent) - expense;
+        this.balanceAmount.textContent = total;
+        if (total < 0){
+            this.balance.classList.remove("showGreen", "showBlack");
+            this.balance.classList.add("showRed");
+        }
+        else if (total > 0){
+            this.balance.classList.remove("showRed", "showBlack");
+            this.balance.classList.add("showGreen");
+        }
+        else if (total === 0){
+            this.balance.classList.remove("showRed", "showGreen");
+            this.balance.classList.add("showBlack");
+        }
+    }
+
+    // submit expense form
+    submitExpenseForm(){
+        const expenseValue = this.expenseInput.value;
+        const amountValue = this.amountInput.value;
+        if(expenseValue === '' || amountValue === '' || amountValue < 0){
+            this.expenseFeedback.classList.add('showItem');
+            this.expenseFeedback.innerHTML = '<p>values cannot be empty or negative<\p>';
+            const self = this;
+            setTimeout(() => {
+                self.expenseFeedback.classList.remove("showItem");
+            }, 4000);
+        }
+    }
+
+    //total expense
+    totalExpense(){
+        let total = 400;
+        return total;
     }
 }
 
@@ -60,6 +94,7 @@ function eventListenters() {
     // expense form submit
     expenseForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        ui.submitExpenseForm();
     })
 
     // boudget click
