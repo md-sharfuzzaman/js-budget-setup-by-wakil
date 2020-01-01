@@ -71,8 +71,8 @@ class UI {
         }
         else{
             let amount = parseInt(amountValue);
-            this.expenseInput = "";
-            this.amountInput = "";
+            this.expenseInput.value = "";
+            this.amountInput.value = "";
 
             let expense = {
                 id:this.itemID,
@@ -82,6 +82,7 @@ class UI {
             this.itemID++
             this.itemList.push(expense);
             this.addExpense(expense)
+            this.showBalance();
             //show balance
         }
     }
@@ -110,7 +111,14 @@ class UI {
 
     //total expense
     totalExpense(){
-        let total = 400;
+        let total = 0;
+        if(this.itemList.length>0){
+            total = this.itemList.reduce(function(acc, curr){
+                acc +=curr.amount;
+                return acc;
+            }, 0)
+        }
+        this.expenseAmount.textContent = total;
         return total;
     }
 }
